@@ -21,17 +21,18 @@ build
 eclipse
 run
 
-config
-crash-reports
-mods
-saves
-screenshots
-logs
+/config
+/crash-reports
+/mods
+/saves
+/screenshots
+/logs
 
-beatmap
-melodycraft
+/beatmap
+/melodycraft
 
-options.txt
-servers.dat
-usercache.json
-usernamecache.json
+
+/options.txt
+/servers.dat
+/usercache.json
+/usernamecache.json
