@@ -2,6 +2,7 @@ package hciu.pub.mcmod.hciusutils.gui;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import hciu.pub.mcmod.hciusutils.gui.render.AbstractTextureDrawer;

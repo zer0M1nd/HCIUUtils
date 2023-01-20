@@ -2,9 +2,12 @@ package hciu.pub.mcmod.hciusutils.gui;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
 
 import hciu.pub.mcmod.hciusutils.gui.render.AbstractTextureDrawer;
 import net.minecraft.client.Minecraft;
@@ -25,6 +28,8 @@ public class SmartGuiScreen extends GuiScreen implements ISmartGuiComponent {
 	private AbstractTextureDrawer<SmartGuiScreen> texture;
 	private boolean autoCenter = true;
 
+	private HashMap<Integer, ISmartGuiComponent> keyBinding = new HashMap<>();
+
 	public SmartGuiScreen getParent() {
 		return parent;
 	}
@@ -44,6 +49,10 @@ public class SmartGuiScreen extends GuiScreen implements ISmartGuiComponent {
 
 	protected void addComponent(ISmartGuiComponent comp) {
 		components.add(comp);
+	}
+	
+	protected void addKeyBinding(int keyCode, ISmartGuiComponent component, boolean focusedOnly) {
+		keyBinding.put(keyCode + (focusedOnly ? 0 : 32768), component);
 	}
 
 	public ISmartGuiComponent getFocus() {
@@ -110,22 +119,32 @@ public class SmartGuiScreen extends GuiScreen implements ISmartGuiComponent {
 
 	@Override
 	public void onKeyPressed(char typedChar, int keyCode) {
-		if(getHolder() == null) {
+		if (getHolder() == null) {
 			try {
 				super.keyTyped(typedChar, keyCode);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
+		ISmartGuiComponent t = keyBinding.getOrDefault(keyCode + 32768, null);
+		if(t != null) {
+			t.onMouseClicked(0, 0, 0);
+			return;
+		}
 		if (focus != null) {
 			focus.onKeyPressed(typedChar, keyCode);
+		} else {
+			t = keyBinding.getOrDefault(keyCode, null);
+			if(t != null) {
+				t.onMouseClicked(0, 0, 0);
+			}
 		}
 	}
 
 	@Override
 	public void onMouseClicked(int mouseX, int mouseY, int mouseButton) {
 		focus = null;
-		for (int i = components.size() - 1;i >= 0;i--) {
+		for (int i = components.size() - 1; i >= 0; i--) {
 			ISmartGuiComponent c = components.get(i);
 			if (c.checkMouse()) {
 				focus = c;
@@ -137,7 +156,7 @@ public class SmartGuiScreen extends GuiScreen implements ISmartGuiComponent {
 
 	@Override
 	public void onMouseReleased(int mouseX, int mouseY, int state) {
-		for (int i = components.size() - 1;i >= 0;i--) {
+		for (int i = components.size() - 1; i >= 0; i--) {
 			ISmartGuiComponent c = components.get(i);
 			if (c.checkMouse()) {
 				c.onMouseReleased(mouseX - c.getRelativeX(), mouseY - c.getRelativeY(), state);
@@ -218,12 +237,12 @@ public class SmartGuiScreen extends GuiScreen implements ISmartGuiComponent {
 			autoCenter();
 		}
 	}
-	
-	public void setCenter(int x,int y) {
+
+	public void setCenter(int x, int y) {
 		setPos(x - sizeX / 2, y - sizeY / 2);
 	}
-	
-	public void setCenterSize(int x,int y,int sx,int sy) {
+
+	public void setCenterSize(int x, int y, int sx, int sy) {
 		setSize(sx, sy);
 		setCenter(x, y);
 	}
@@ -269,7 +288,7 @@ public class SmartGuiScreen extends GuiScreen implements ISmartGuiComponent {
 
 	@Override
 	public void onKeyReleased(char typedChar, int keyCode) {
-		//System.out.println("Key released " + keyCode);
+		// System.out.println("Key released " + keyCode);
 		if (focus != null) {
 			focus.onKeyReleased(typedChar, keyCode);
 		}
