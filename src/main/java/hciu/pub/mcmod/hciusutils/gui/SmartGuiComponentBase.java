@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.function.Consumer;
 
 import hciu.pub.mcmod.hciusutils.gui.render.AbstractTextureDrawer;
 import net.minecraft.client.Minecraft;
@@ -21,6 +22,8 @@ public class SmartGuiComponentBase extends Gui implements ISmartGuiComponent {
 	protected AbstractTextureDrawer<?> texture;
 	private ISmartGuiComponent focus = null;
 	private List<ISmartGuiComponent> components;
+
+	private Consumer<? extends SmartGuiComponentBase> resizeAction = null;
 
 	public SmartGuiComponentBase(ISmartGuiComponent holder) {
 		this.holder = holder;
@@ -181,6 +184,18 @@ public class SmartGuiComponentBase extends Gui implements ISmartGuiComponent {
 		for (ISmartGuiComponent c : components) {
 			c.onResizeAll();
 		}
+	}
+
+	@Override
+	public void onResizeSelf() {
+		if (this.resizeAction != null) {
+			((Consumer<SmartGuiComponentBase>) this.resizeAction).accept(this);
+		}
+	}
+
+	public SmartGuiComponentBase setResizeAction(Consumer<? extends SmartGuiComponentBase> action) {
+		this.resizeAction = action;
+		return this;
 	}
 
 	@Override

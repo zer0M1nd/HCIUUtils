@@ -1,6 +1,7 @@
 package hciu.pub.mcmod.hciusutils.gui;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 import org.lwjgl.input.Mouse;
 
@@ -149,7 +150,7 @@ public interface ISmartGuiComponent {
 	 */
 	default public void onResizeSelf() {
 	}
-
+	
 	/**
 	 * 将当前窗口中以比例形式表示的X坐标转化为像素<br>
 	 */

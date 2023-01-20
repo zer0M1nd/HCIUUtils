@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
@@ -29,6 +30,7 @@ public class SmartGuiScreen extends GuiScreen implements ISmartGuiComponent {
 	private boolean autoCenter = true;
 
 	private HashMap<Integer, ISmartGuiComponent> keyBinding = new HashMap<>();
+	private Consumer<? extends ISmartGuiComponent> resizeAction;
 
 	public SmartGuiScreen getParent() {
 		return parent;
@@ -266,6 +268,17 @@ public class SmartGuiScreen extends GuiScreen implements ISmartGuiComponent {
 		}
 	}
 
+	@Override
+	public void onResizeSelf() {
+		if (this.resizeAction != null) {
+			((Consumer<SmartGuiScreen>) this.resizeAction).accept(this);
+		}
+	}
+
+	public SmartGuiScreen setResizeAction(Consumer<? extends SmartGuiScreen> action) {
+		this.resizeAction = action;
+		return this;
+	}
 	@Override
 	public List<String> getTooltipAll() {
 		for (ISmartGuiComponent c : components) {

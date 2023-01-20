@@ -14,6 +14,11 @@ public class SmartGuiButton extends SmartGuiComponentBase {
 		setTextureDrawer(new ButtonTextureDrawer(this, ButtonTextureDrawer.makeFlexibleSubs(this, 3,
 				SmartGuiConstants.VANILLA_TEXTURE_WIDGETS, 0, 46, 200, 20, 0, 20)));
 	}
+	
+	public SmartGuiButton(ISmartGuiComponent holder, String text) {
+		this(holder);
+		setText(text);
+	}
 
 	@Override
 	public void drawSelf() {
