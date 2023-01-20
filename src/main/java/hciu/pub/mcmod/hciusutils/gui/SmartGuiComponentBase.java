@@ -107,7 +107,7 @@ public class SmartGuiComponentBase extends Gui implements ISmartGuiComponent {
 		focus = null;
 		for (int i = components.size() - 1; i >= 0; i--) {
 			ISmartGuiComponent c = components.get(i);
-			if (c.checkMouse()) {
+			if (c.checkMouse() && c.isVisible()) {
 				focus = c;
 				c.onMouseClicked(mouseX - c.getRelativeX(), mouseY - c.getRelativeY(), mouseButton);
 				break;
