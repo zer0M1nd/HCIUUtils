@@ -1,12 +1,14 @@
 package hciu.pub.mcmod.hciusutils.gui;
 
+import com.google.common.base.Supplier;
+
 import hciu.pub.mcmod.hciusutils.gui.render.ButtonTextureDrawer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 
 public class SmartGuiButton extends SmartGuiComponentBase {
 
-	private String text = "";
+	private Supplier<String> text = () -> "";
 	private boolean enabled = true;
 
 	public SmartGuiButton(ISmartGuiComponent holder) {
@@ -14,8 +16,13 @@ public class SmartGuiButton extends SmartGuiComponentBase {
 		setTextureDrawer(new ButtonTextureDrawer(this, ButtonTextureDrawer.makeFlexibleSubs(this, 3,
 				SmartGuiConstants.VANILLA_TEXTURE_WIDGETS, 0, 46, 200, 20, 0, 20)));
 	}
-	
+
 	public SmartGuiButton(ISmartGuiComponent holder, String text) {
+		this(holder);
+		setText(text);
+	}
+
+	public SmartGuiButton(ISmartGuiComponent holder, Supplier<String> text) {
 		this(holder);
 		setText(text);
 	}
@@ -45,10 +52,14 @@ public class SmartGuiButton extends SmartGuiComponentBase {
 	}
 
 	public String getText() {
-		return text;
+		return text.get();
 	}
 
 	public void setText(String text) {
+		this.text = () -> text;
+	}
+
+	public void setText(Supplier<String> text) {
 		this.text = text;
 	}
 }
