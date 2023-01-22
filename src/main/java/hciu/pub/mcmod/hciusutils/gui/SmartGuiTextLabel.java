@@ -6,7 +6,7 @@ import net.minecraft.client.Minecraft;
 
 public class SmartGuiTextLabel extends SmartGuiComponentBase {
 
-	private Supplier<String> text;
+	private Supplier<String> text = () -> "";
 	private boolean centered = false;
 
 	public SmartGuiTextLabel(ISmartGuiComponent holder) {
@@ -39,8 +39,9 @@ public class SmartGuiTextLabel extends SmartGuiComponentBase {
 		return centered;
 	}
 
-	public void setCentered(boolean centered) {
+	public SmartGuiTextLabel setCentered(boolean centered) {
 		this.centered = centered;
+		return this;
 	}
 
 	@Override

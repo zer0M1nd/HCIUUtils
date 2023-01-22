@@ -222,4 +222,8 @@ public class SmartGuiListSimple<T> extends SmartGuiComponentBase {
 	public void onSelectionChanged() {
 
 	}
+
+	public void pressButton(int id) {
+		(new SmartGuiButton[] { buttonTop, buttonUp, buttonDown, buttonBottom }[id]).onMouseClicked(0, 0, 0);
+	}
 }
