@@ -1,12 +1,9 @@
 package hciu.pub.mcmod.hciusutils.gui;
 
-import java.nio.channels.Selector;
 import java.util.ArrayList;
 
 import java.util.List;
 import java.util.function.Function;
-
-import javax.swing.text.StyleConstants.CharacterConstants;
 
 import hciu.pub.mcmod.hciusutils.gui.render.FramedRectangleDrawer;
 import hciu.pub.mcmod.hciusutils.gui.render.AbstractTextureDrawer;
@@ -83,36 +80,39 @@ public class SmartGuiListSimple<T> extends SmartGuiComponentBase {
 		selectionBackground.setBounds(boarderSize, boarderSize, sizeX - boarderSize - buttonWidth, lineHeight);
 	}
 
-	public void setButtonTextureDrawer(Function<SmartGuiButton, AbstractTextureDrawer<?>> drawers) {
+	public ISmartGuiComponent setButtonTextureDrawer(Function<SmartGuiButton, AbstractTextureDrawer<?>> drawers) {
 		buttonTop.setTextureDrawer(drawers.apply(buttonTop));
 		buttonUp.setTextureDrawer(drawers.apply(buttonUp));
 		buttonDown.setTextureDrawer(drawers.apply(buttonDown));
 		buttonBottom.setTextureDrawer(drawers.apply(buttonBottom));
+		return this;
 	}
 
-	public void setButtonTexts(String[] buttonTexts) {
+	public ISmartGuiComponent setButtonTexts(String[] buttonTexts) {
 		buttonTop.setText(buttonTexts[0]);
 		buttonUp.setText(buttonTexts[1]);
 		buttonDown.setText(buttonTexts[2]);
 		buttonBottom.setText(buttonTexts[3]);
+		return this;
 	}
 
-	public void setBackgroundDrawer(Function<SmartGuiComponentBase, AbstractTextureDrawer<?>> drawer) {
+	public ISmartGuiComponent setBackgroundDrawer(Function<SmartGuiComponentBase, AbstractTextureDrawer<?>> drawer) {
 		selectionBackground.setTextureDrawer(drawer.apply(selectionBackground));
+		return this;
 	}
 
 	public List<T> getItems() {
 		return items;
 	}
 
-	public void setItems(List<T> items) {
+	public ISmartGuiComponent setItems(List<T> items) {
 		this.items = items;
 		validateSelected();
 		onSelectionChanged();
+		return this;
 	}
 
 	public void validateSelected() {
-		int old = selected;
 		if (selected > items.size() - 1) {
 			selected = items.size() - 1;
 		} else if (selected < 0) {
@@ -160,13 +160,14 @@ public class SmartGuiListSimple<T> extends SmartGuiComponentBase {
 		return selected;
 	}
 
-	public void setSelected(int selected) {
+	public ISmartGuiComponent setSelected(int selected) {
 		int old = this.selected;
 		this.selected = selected;
 		validateSelected();
 		if (old != selected) {
 			onSelectionChanged();
 		}
+		return this;
 	}
 
 	public int getLineHeight() {
@@ -181,20 +182,24 @@ public class SmartGuiListSimple<T> extends SmartGuiComponentBase {
 		return boarderSize;
 	}
 
-	public void setDisplayFunction(Function<T, String> displayFunction) {
+	public ISmartGuiComponent setDisplayFunction(Function<T, String> displayFunction) {
 		this.displayFunction = displayFunction;
+		return this;
 	}
 
-	public void setLineHeight(int lineHeight) {
+	public ISmartGuiComponent setLineHeight(int lineHeight) {
 		this.lineHeight = lineHeight;
+		return this;
 	}
 
-	public void setButtonWidth(int buttonWidth) {
+	public ISmartGuiComponent setButtonWidth(int buttonWidth) {
 		this.buttonWidth = buttonWidth;
+		return this;
 	}
 
-	public void setBoarderSize(int boarderSize) {
+	public ISmartGuiComponent setBoarderSize(int boarderSize) {
 		this.boarderSize = boarderSize;
+		return this;
 	}
 
 	@Override

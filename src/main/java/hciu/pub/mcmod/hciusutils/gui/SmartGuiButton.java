@@ -4,7 +4,6 @@ import com.google.common.base.Supplier;
 
 import hciu.pub.mcmod.hciusutils.gui.render.ButtonTextureDrawer;
 import net.minecraft.client.Minecraft;
-import net.minecraft.util.ResourceLocation;
 
 public class SmartGuiButton extends SmartGuiComponentBase {
 
@@ -47,19 +46,22 @@ public class SmartGuiButton extends SmartGuiComponentBase {
 		return enabled;
 	}
 
-	public void setEnabled(boolean enabled) {
+	public ISmartGuiComponent setEnabled(boolean enabled) {
 		this.enabled = enabled;
+		return this;
 	}
 
 	public String getText() {
 		return text.get();
 	}
 
-	public void setText(String text) {
+	public ISmartGuiComponent setText(String text) {
 		this.text = () -> text;
+		return this;
 	}
 
-	public void setText(Supplier<String> text) {
+	public ISmartGuiComponent setText(Supplier<String> text) {
 		this.text = text;
+		return this;
 	}
 }

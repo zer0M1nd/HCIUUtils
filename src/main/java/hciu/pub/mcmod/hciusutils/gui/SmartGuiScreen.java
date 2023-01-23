@@ -4,11 +4,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
 import java.util.function.Consumer;
 
 import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
 
 import hciu.pub.mcmod.hciusutils.gui.render.AbstractTextureDrawer;
 import net.minecraft.client.Minecraft;
@@ -36,12 +34,14 @@ public class SmartGuiScreen extends GuiScreen implements ISmartGuiComponent {
 		return parent;
 	}
 
-	public void setTextureDrawer(AbstractTextureDrawer<SmartGuiScreen> drawer) {
+	public ISmartGuiComponent setTextureDrawer(AbstractTextureDrawer<SmartGuiScreen> drawer) {
 		texture = drawer;
+		return this;
 	}
 
-	public void setVisible(boolean visible) {
+	public ISmartGuiComponent setVisible(boolean visible) {
 		this.visible = visible;
+		return this;
 	}
 
 	@Override
@@ -167,8 +167,9 @@ public class SmartGuiScreen extends GuiScreen implements ISmartGuiComponent {
 		}
 	}
 
-	public void setAutoCenter(boolean autoCenter) {
+	public ISmartGuiComponent setAutoCenter(boolean autoCenter) {
 		this.autoCenter = autoCenter;
+		return this;
 	}
 
 	@Override
@@ -216,42 +217,49 @@ public class SmartGuiScreen extends GuiScreen implements ISmartGuiComponent {
 		}
 	}
 
-	public void setPos(int x, int y) {
+	public ISmartGuiComponent setPos(int x, int y) {
 		relativeX = x;
 		relativeY = y;
 		updateActual();
+		return this;
 	}
 
-	public void setX(int relativeX) {
+	public ISmartGuiComponent setX(int relativeX) {
 		this.relativeX = relativeX;
 		updateActual();
+		return this;
 	}
 
-	public void setY(int relativeY) {
+	public ISmartGuiComponent setY(int relativeY) {
 		this.relativeY = relativeY;
 		updateActual();
+		return this;
 	}
 
-	public void setSize(int x, int y) {
+	public ISmartGuiComponent setSize(int x, int y) {
 		this.sizeX = x;
 		this.sizeY = y;
 		if (autoCenter) {
 			autoCenter();
 		}
+		return this;
 	}
 
-	public void setCenter(int x, int y) {
+	public ISmartGuiComponent setCenter(int x, int y) {
 		setPos(x - sizeX / 2, y - sizeY / 2);
+		return this;
 	}
 
-	public void setCenterSize(int x, int y, int sx, int sy) {
+	public ISmartGuiComponent setCenterSize(int x, int y, int sx, int sy) {
 		setSize(sx, sy);
 		setCenter(x, y);
+		return this;
 	}
 
-	public void setBounds(int x, int y, int sx, int sy) {
+	public ISmartGuiComponent setBounds(int x, int y, int sx, int sy) {
 		setSize(sx, sy);
 		setPos(x, y);
+		return this;
 	}
 
 	public void autoCenter() {
@@ -351,8 +359,9 @@ public class SmartGuiScreen extends GuiScreen implements ISmartGuiComponent {
 	}
 
 	@Override
-	public void setFocus(ISmartGuiComponent focus) {
+	public ISmartGuiComponent setFocus(ISmartGuiComponent focus) {
 		this.focus = focus;
+		return this;
 	}
 
 	@Override

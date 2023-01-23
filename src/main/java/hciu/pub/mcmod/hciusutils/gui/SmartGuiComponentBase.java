@@ -1,18 +1,11 @@
 package hciu.pub.mcmod.hciusutils.gui;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.function.Consumer;
 
 import hciu.pub.mcmod.hciusutils.gui.render.AbstractTextureDrawer;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 
 public class SmartGuiComponentBase extends Gui implements ISmartGuiComponent {
 
@@ -32,20 +25,23 @@ public class SmartGuiComponentBase extends Gui implements ISmartGuiComponent {
 	}
 
 	@Override
-	public void setFocus(ISmartGuiComponent focus) {
+	public ISmartGuiComponent setFocus(ISmartGuiComponent focus) {
 		this.focus = focus;
+		return this;
 	}
 
 	protected void addComponent(ISmartGuiComponent comp) {
 		components.add(comp);
 	}
 
-	public void setTextureDrawer(AbstractTextureDrawer<?> drawer) {
+	public ISmartGuiComponent setTextureDrawer(AbstractTextureDrawer<?> drawer) {
 		texture = drawer;
+		return this;
 	}
 
-	public void setVisible(boolean visible) {
+	public ISmartGuiComponent setVisible(boolean visible) {
 		this.visible = visible;
+		return this;
 	}
 
 	@Override
@@ -138,44 +134,52 @@ public class SmartGuiComponentBase extends Gui implements ISmartGuiComponent {
 		}
 	}
 
-	public void setX(int relativeX) {
+	public ISmartGuiComponent setX(int relativeX) {
 		this.relativeX = relativeX;
 		updateActual();
+		return this;
 	}
 
-	public void setY(int relativeY) {
+	public ISmartGuiComponent setY(int relativeY) {
 		this.relativeY = relativeY;
 		updateActual();
+		return this;
 	}
 
-	public void setPos(int x, int y) {
+	public ISmartGuiComponent setPos(int x, int y) {
 		relativeX = x;
 		relativeY = y;
 		updateActual();
+		return this;
 	}
 
-	public void setSize(int x, int y) {
+	public ISmartGuiComponent setSize(int x, int y) {
 		this.sizeX = x;
 		this.sizeY = y;
+		return this;
 	}
 
-	public void setBounds(int x, int y, int sx, int sy) {
+	public ISmartGuiComponent setBounds(int x, int y, int sx, int sy) {
 		setSize(sx, sy);
 		setPos(x, y);
+		return this;
 	}
 
-	public void setCorners(int x, int y, int x1, int y1) {
+	public ISmartGuiComponent setCorners(int x, int y, int x1, int y1) {
 		setSize(x1 - x, y1 - y);
 		setPos(x, y);
+		return this;
 	}
 
-	public void setCenter(int x, int y) {
+	public ISmartGuiComponent setCenter(int x, int y) {
 		setPos(x - sizeX / 2, y - sizeY / 2);
+		return this;
 	}
 
-	public void setCenterSize(int x, int y, int sx, int sy) {
+	public ISmartGuiComponent setCenterSize(int x, int y, int sx, int sy) {
 		setSize(sx, sy);
 		setCenter(x, y);
+		return this;
 	}
 
 	@Override

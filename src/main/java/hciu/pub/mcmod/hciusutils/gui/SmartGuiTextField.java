@@ -35,8 +35,9 @@ public class SmartGuiTextField extends SmartGuiComponentBase {
 				VANILLA_TEXTBOX_COLOR_INSIDE, 1));
 	}
 
-	public void setMaxLength(int maxLength) {
+	public ISmartGuiComponent setMaxLength(int maxLength) {
 		this.maxLength = maxLength;
+		return this;
 	}
 
 	public String getText() {
@@ -47,8 +48,9 @@ public class SmartGuiTextField extends SmartGuiComponentBase {
 		return defaultText;
 	}
 
-	public void setDefaultText(String defaultText) {
+	public ISmartGuiComponent setDefaultText(String defaultText) {
 		this.defaultText = defaultText;
+		return this;
 	}
 
 	public int getMaxLength() {
@@ -65,7 +67,7 @@ public class SmartGuiTextField extends SmartGuiComponentBase {
 	/**
 	 * Sets the text of the textbox, and moves the cursor to the end.
 	 */
-	public void setText(String textIn) {
+	public ISmartGuiComponent setText(String textIn) {
 		if (this.validator.apply(textIn)) {
 			if (textIn.length() > this.maxLength) {
 				this.text = textIn.substring(0, this.maxLength);
@@ -75,6 +77,7 @@ public class SmartGuiTextField extends SmartGuiComponentBase {
 
 			this.setCursorPositionEnd();
 		}
+		return this;
 	}
 
 	/**
@@ -86,8 +89,9 @@ public class SmartGuiTextField extends SmartGuiComponentBase {
 		return this.text.substring(i, j);
 	}
 
-	public void setValidator(Predicate<String> theValidator) {
+	public ISmartGuiComponent setValidator(Predicate<String> theValidator) {
 		this.validator = theValidator;
+		return this;
 	}
 
 	/**
@@ -237,25 +241,28 @@ public class SmartGuiTextField extends SmartGuiComponentBase {
 	/**
 	 * Sets the current position of the cursor.
 	 */
-	public void setCursorPosition(int pos) {
+	public ISmartGuiComponent setCursorPosition(int pos) {
 		this.cursorPosition = pos;
 		int i = this.text.length();
 		this.cursorPosition = MathHelper.clamp(this.cursorPosition, 0, i);
 		this.setSelectionPos(this.cursorPosition);
+		return this;
 	}
 
 	/**
 	 * Moves the cursor to the very start of this text box.
 	 */
-	public void setCursorPositionZero() {
+	public ISmartGuiComponent setCursorPositionZero() {
 		this.setCursorPosition(0);
+		return this;
 	}
 
 	/**
 	 * Moves the cursor to the very end of this text box.
 	 */
-	public void setCursorPositionEnd() {
+	public ISmartGuiComponent setCursorPositionEnd() {
 		this.setCursorPosition(this.text.length());
+		return this;
 	}
 
 	/**
@@ -487,12 +494,13 @@ public class SmartGuiTextField extends SmartGuiComponentBase {
 	 * Sets the maximum length for the text in this text box. If the current text is
 	 * longer than this length, the current text will be trimmed.
 	 */
-	public void setMaxStringLength(int length) {
+	public ISmartGuiComponent setMaxStringLength(int length) {
 		this.maxLength = length;
 
 		if (this.text.length() > length) {
 			this.text = this.text.substring(0, length);
 		}
+		return this;
 	}
 
 	/**
@@ -513,20 +521,23 @@ public class SmartGuiTextField extends SmartGuiComponentBase {
 	 * Sets the color to use when drawing this text box's text. A different color is
 	 * used if this text box is disabled.
 	 */
-	public void setTextColor(int color) {
+	public ISmartGuiComponent setTextColor(int color) {
 		this.enabledColor = color;
+		return this;
 	}
 
 	/**
 	 * Sets the color to use for text in this text box when this text box is
 	 * disabled.
 	 */
-	public void setDisabledTextColour(int color) {
+	public ISmartGuiComponent setDisabledTextColour(int color) {
 		this.disabledColor = color;
+		return this;
 	}
 
-	public void setEnabled(boolean enabled) {
+	public ISmartGuiComponent setEnabled(boolean enabled) {
 		this.isEnabled = enabled;
+		return this;
 	}
 
 	/**
@@ -542,7 +553,7 @@ public class SmartGuiTextField extends SmartGuiComponentBase {
 	 * cursor position mark the edges of the selection). If the anchor is set beyond
 	 * the bounds of the current text, it will be put back inside.
 	 */
-	public void setSelectionPos(int position) {
+	public ISmartGuiComponent setSelectionPos(int position) {
 		int i = this.text.length();
 
 		if (position > i) {
@@ -576,5 +587,6 @@ public class SmartGuiTextField extends SmartGuiComponentBase {
 
 			this.lineScrollOffset = MathHelper.clamp(this.lineScrollOffset, 0, i);
 		}
+		return this;
 	}
 }

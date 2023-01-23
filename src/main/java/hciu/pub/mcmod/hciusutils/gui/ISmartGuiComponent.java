@@ -1,12 +1,8 @@
 package hciu.pub.mcmod.hciusutils.gui;
 
 import java.util.List;
-import java.util.function.Consumer;
 
 import org.lwjgl.input.Mouse;
-
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Lists;
 
 import net.minecraft.client.Minecraft;
 
@@ -132,7 +128,7 @@ public interface ISmartGuiComponent {
 	 */
 	public ISmartGuiComponent getFocus();
 
-	public void setFocus(ISmartGuiComponent focus);
+	public ISmartGuiComponent setFocus(ISmartGuiComponent focus);
 	
 	/**
 	 * 获取该GUI组件当前是否被设置为可见。

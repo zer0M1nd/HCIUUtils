@@ -27,12 +27,14 @@ public class SmartGuiTextLabel extends SmartGuiComponentBase {
 		return text.get();
 	}
 
-	public void setText(String text) {
+	public ISmartGuiComponent setText(String text) {
 		this.text = () -> text;
+		return this;
 	}
 
-	public void setText(Supplier<String> text) {
+	public ISmartGuiComponent setText(Supplier<String> text) {
 		this.text = text;
+		return this;
 	}
 
 	public boolean isCentered() {
